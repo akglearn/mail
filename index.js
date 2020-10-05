@@ -11,6 +11,7 @@ const REDIRECT_URL = OAuth2Data.client.redirect
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 var authed = false;
 
+// request using GET method applied here
 app.get('/', (req, res) => {
     if (!authed) {
         // Generate an OAuth URL and redirect there
@@ -40,16 +41,17 @@ app.get('/', (req, res) => {
     }
 })
 
+// GET method applied with query parameter
 app.get('/auth/google/cb', function (req, res) {
     const code = req.query.code
     if (code) {
         // Get an access token based on our OAuth code
         oAuth2Client.getToken(code, function (err, tokens) {
             if (err) {
-                console.log('Error authenticating')
+                console.log('Error authenticating mail')
                 console.log(err);
             } else {
-                console.log('Successfully authenticated');
+                console.log('Successfully authenticated mail');
                 oAuth2Client.setCredentials(tokens);
                 authed = true;
                 res.redirect('/')
